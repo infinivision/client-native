@@ -241,6 +241,12 @@ func parseServer(ondiskServer types.Server) *models.Server {
 				s.SslCafile = v.Value
 			case "inter":
 				s.Inter = misc.ParseTimeout(v.Value)
+			case "on-error":
+				s.OnError = v.Value
+			case "on-marked-down":
+				s.OnMarkedDown = v.Value
+			case "on-marked-up":
+				s.OnMarkedUp = v.Value
 			}
 		}
 	}
@@ -304,6 +310,15 @@ func serializeServer(s models.Server) types.Server {
 	}
 	if s.SslCafile != "" {
 		srv.Params = append(srv.Params, &params.ServerOptionValue{Name: "ca-file", Value: s.SslCafile})
+	}
+	if s.OnError != "" {
+		srv.Params = append(srv.Params, &params.ServerOptionValue{Name: "on-error", Value: s.OnError})
+	}
+	if s.OnMarkedDown != "" {
+		srv.Params = append(srv.Params, &params.ServerOptionValue{Name: "on-marked-down", Value: s.OnMarkedDown})
+	}
+	if s.OnMarkedUp != "" {
+		srv.Params = append(srv.Params, &params.ServerOptionValue{Name: "on-marked-up", Value: s.OnMarkedUp})
 	}
 	return srv
 }
